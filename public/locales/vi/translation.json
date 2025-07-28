@@ -3,13 +3,13 @@
         "streak": "Ngày học liên tiếp"
     },
      "bankCards": {
-        "title": "Name",
-        "description": "Description",
-        "addCard": "Add card",
-        "addNewCard": "Add new card",
+        "title": "Thẻ ngân hàng",
+        "description": "Quản lý phương thức thanh toán đã lưu",
+        "addCard": "Thêm thẻ",
+        "addNewCard": "Thêm mới thẻ",
         "cardName": "Card name",
         "cardNumber": "Card number",
-        "expiry": "Expiry",
+        "expires": "Expires",
         "cvv": "CVV",
         "noCards": "No card",
         "noCardsDescription": "Description"

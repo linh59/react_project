@@ -6,7 +6,7 @@ import axios from "axios";
 
 // Tạo instance chung cho toàn app
 const aixiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://staging-api.swa-pay.com/api",
+  baseURL: import.meta.env.VITE_API_URL || "https://staging-api.swa-pay.com/api/v1",
   headers: {
     "Content-Type": "application/json",
   },
