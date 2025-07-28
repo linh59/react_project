@@ -6,6 +6,7 @@ import MainLayout from '../components/layout/MainLayout';
 import ProtectedRoute from '../components/ProtectedRoute';
 import UserProfile from '@/features/user/pages/UserProfile';
 import Components from '@/features/reuseComponents/pages/Components';
+import BankCards from '@/features/cards/pages/BankCards';
 
 export default function AppRoutes() {
   return (
@@ -23,6 +24,7 @@ export default function AppRoutes() {
           <Route path="/" element={<Dashboard />} />
            <Route path="/profile" element={<UserProfile />} />
            <Route path="/components" element={<Components />} />
+           <Route path="/bank-cards" element={<BankCards />} />
           {/* các route khác */}
         </Route>
       </Route>

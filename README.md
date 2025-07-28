@@ -67,3 +67,27 @@ export default tseslint.config([
   },
 ])
 ```
+
+Xong roi a
+anh quen dung dong lenh
+echo "# react_project" >> README.md
+# khoi tao git cho thu muc
+# Khởi tạo Git
+git init
+
+# them, commit file. Cho nay lam truc tiep trong vscode
+git add README.md
+git commit -m "first commit"
+git branch -M main
+
+# lan dau tien, can tro git den link remote server nao. trong truong hop nay la github
+git remote add origin https://github.com/linh59/react_project.
+
+# cho nay la github push. em hay dung github desktop. Nen sau khi add git, co the add repo tren github desktop roi push ben github desktop
+git push -u origin main
+
+Neu khong dung lenh.
+Thi khi tao git cho du an, van dung git init
+roi add file, commit nhu thuong
+add repo vo github desktop, luc push len no se cho dat ten, de khoi phai tao truoc github repo tren web.
+

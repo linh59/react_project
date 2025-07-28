@@ -7,7 +7,7 @@ const Dashboard = () => {
   const { t } = useTranslation();
   return (
     <div className="min-h-screen p-4 sm:p-6">
-      <div className="max-w-6xl mx-auto">
+      <div className="container mx-auto px-4 py-6 max-w-4xl">
         {/* TimeBasedGreeting Component */}
         {/* <TimeBasedGreeting /> */}
         

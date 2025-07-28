@@ -1,5 +1,17 @@
 {
     "home": {
         "streak": "Day streak"
+    },
+    "bankCards": {
+        "title": "Name",
+        "description": "Description",
+        "addCard": "Add card",
+        "addNewCard": "Add new card",
+        "cardName": "Card name",
+        "cardNumber": "Card number",
+        "expiry": "Expiry",
+        "cvv": "CVV",
+        "noCards": "No card",
+        "noCardsDescription": "Description"
     }
 }

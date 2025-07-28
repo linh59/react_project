@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Headphones, PenTool, MessageCircle, BookOpen, Notebook, Component, User, Settings, Menu, X, LogOut } from 'lucide-react';
+import { Home, Headphones, PenTool, MessageCircle, BookOpen, Notebook, Component, User, Settings, Menu, X, LogOut, CreditCard } from 'lucide-react';
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -30,6 +30,8 @@ const Navigation = () => {
 
   const userNavItems = [
     { name: 'Profile', href: '/profile', icon: User },
+    { name: 'Bank Cards', href: '/bank-cards', icon: CreditCard, },
+    // { name: 'Transactions', href: '/transactions', icon: Receipt, translationKey: 'transactions.title' },
     { name: 'Settings', href: '/settings', icon: Settings }
   ];
 
