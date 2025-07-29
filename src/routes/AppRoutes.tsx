@@ -7,6 +7,7 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import UserProfile from '@/features/user/pages/UserProfile';
 import Components from '@/features/reuseComponents/pages/Components';
 import BankCards from '@/features/cards/pages/BankCards';
+import TransactionHistory from '@/features/paymentHistory/pages/TransactionHistory';
 
 export default function AppRoutes() {
   return (
@@ -25,6 +26,7 @@ export default function AppRoutes() {
            <Route path="/profile" element={<UserProfile />} />
            <Route path="/components" element={<Components />} />
            <Route path="/bank-cards" element={<BankCards />} />
+           <Route path="/transactions" element={<TransactionHistory />} />
           {/* các route khác */}
         </Route>
       </Route>

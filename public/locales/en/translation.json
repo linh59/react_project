@@ -13,5 +13,26 @@
         "cvv": "CVV",
         "noCards": "No card",
         "noCardsDescription": "Description"
+    },
+    "transactions": {
+        "title": "Transaction History",
+        "description": "View your purchase history and payment details",
+        "planName": "Plan name",
+        "amount": "Amount",
+        "date": "Date",
+        "status": "Status",
+        "paymentMethod": "Payment method",
+        "actions": "Actions",
+        "searchPlaceholder": "Search",
+        "filterStatus": "Filter status",
+        "allStatuses": "All statuses",
+        "completed": "Completed",
+        "pending": "Pending",
+        "failed": "Failed",
+        "showing": "Showing",
+        "perPage": "/page",
+        "results": "Results",
+        "of": "of",
+        "viewDetails": "View detail"
     }
 }

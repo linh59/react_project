@@ -5,7 +5,7 @@ import axios from "axios";
 // import { logoutUser } from "../../../features/auth/authActions";
 
 // Tạo instance chung cho toàn app
-const aixiosInstance = axios.create({
+const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "https://staging-api.swa-pay.com/api/v1",
   headers: {
     "Content-Type": "application/json",
@@ -13,7 +13,7 @@ const aixiosInstance = axios.create({
 });
 
 // Interceptor: tự gắn token vào mọi request
-aixiosInstance.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = token;
@@ -23,7 +23,7 @@ aixiosInstance.interceptors.request.use((config) => {
 
 // Interceptor: xử lý lỗi 401 (tuỳ chọn)
 
-aixiosInstance.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     // const dispatch = useDispatch<AppDispatch>()
@@ -38,4 +38,4 @@ aixiosInstance.interceptors.response.use(
   }
 );
 
-export default aixiosInstance;
+export default axiosInstance;

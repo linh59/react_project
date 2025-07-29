@@ -1,16 +1,16 @@
-import aixiosInstance from "../../app/shared/api/axiosInstance";
+import axiosInstance from "@/app/axiosInstance";
 import type { UpdateProfileRequest, UserProfile } from "./authTypes";
 
 
 
 export const userAPI = {
      getProfile: async (): Promise<UserProfile> => {
-        const response = await aixiosInstance.get<UserProfile>("userinfo");
+        const response = await axiosInstance.get<UserProfile>("userinfo");
         return response.data;
     },
     
      updateProfile: async (data: UpdateProfileRequest): Promise<UserProfile> => {
-        const response = await aixiosInstance.put<UserProfile>("userinfo", data);
+        const response = await axiosInstance.put<UserProfile>("userinfo", data);
         return response.data;
     },
 };
