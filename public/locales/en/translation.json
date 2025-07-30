@@ -34,5 +34,14 @@
         "results": "Results",
         "of": "of",
         "viewDetails": "View detail"
+    },
+    "components": {
+        "title": "UI Components",
+        "description": "Complete reference for all reusable components in the design system",
+        "allCategories": "All",
+        "copyCode": "Copy code",
+        "examples": "Example",
+        "props": "Props",
+        "searchPlaceholder": "Search"
     }
 }

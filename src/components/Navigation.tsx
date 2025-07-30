@@ -28,7 +28,7 @@ const Navigation = () => {
     // { name: 'Conversation', href: '/conversation', icon: MessageCircle },
     // { name: 'Grammar', href: '/grammar', icon: BookOpen },
     // { name: 'Notebook', href: '/notebook', icon: Notebook },
-    { name: 'Components', href: '/components', icon: Component }
+    { name: 'Components', href: '/reuse-components', icon: Component }
   ];
 
   const userNavItems = [

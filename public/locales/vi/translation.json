@@ -2,7 +2,7 @@
     "home": {
         "streak": "Ngày học liên tiếp"
     },
-     "bankCards": {
+    "bankCards": {
         "title": "Thẻ ngân hàng",
         "description": "Quản lý phương thức thanh toán đã lưu",
         "addCard": "Thêm thẻ",
@@ -14,7 +14,7 @@
         "noCards": "No card",
         "noCardsDescription": "Description"
     },
-    "transactions":{
+    "transactions": {
         "title": "Transaction History",
         "description": "View your purchase history and payment details",
         "planName": "Plan name",
@@ -35,5 +35,14 @@
         "results": "Results",
         "of": "of",
         "viewDetails": "View detail"
+    },
+    "components": {
+        "title": "UI Components",
+        "description": "Complete reference for all reusable components in the design system",
+        "allCategories": "All",
+        "copyCode": "Copy code",
+        "examples": "Example",
+        "props": "Props",
+        "searchPlaceholder": "Search"
     }
 }

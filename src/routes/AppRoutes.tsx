@@ -5,9 +5,9 @@ import AuthLayout from '../components/layout/AuthLayout';
 import MainLayout from '../components/layout/MainLayout';
 import ProtectedRoute from '../components/ProtectedRoute';
 import UserProfile from '@/features/user/pages/UserProfile';
-import Components from '@/features/reuseComponents/pages/Components';
 import BankCards from '@/features/cards/pages/BankCards';
 import TransactionHistory from '@/features/paymentHistory/pages/TransactionHistory';
+import ReuseComponents from '@/features/reuseComponents/pages/ReuseComponents';
 
 export default function AppRoutes() {
   return (
@@ -24,7 +24,7 @@ export default function AppRoutes() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Dashboard />} />
            <Route path="/profile" element={<UserProfile />} />
-           <Route path="/components" element={<Components />} />
+           <Route path="/reuse-components" element={<ReuseComponents />} />
            <Route path="/bank-cards" element={<BankCards />} />
            <Route path="/transactions" element={<TransactionHistory />} />
           {/* các route khác */}
