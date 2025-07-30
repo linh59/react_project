@@ -1,4 +1,7 @@
 {
+    "common":{
+        "back": "Back"
+    },
     "home": {
         "streak": "Day streak"
     },
@@ -33,7 +36,19 @@
         "perPage": "/page",
         "results": "Results",
         "of": "of",
-        "viewDetails": "View detail"
+        "viewDetails": "View detail",
+        "transactionDetails": "Transaction Details",
+        "transactionStatus": "Status",
+        "details": "Details",
+        "transactionId": "Id",
+        "name": "Name",
+        "email": "Email",
+        "address": "Address",
+        "receipt": "Receipt",
+        "tax": "Tax",
+        "total": "Total",
+        "subtotal": "Sub total",
+        "billingInfo": "Billing Information"
     },
     "components": {
         "title": "UI Components",

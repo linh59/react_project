@@ -8,6 +8,7 @@ import UserProfile from '@/features/user/pages/UserProfile';
 import BankCards from '@/features/cards/pages/BankCards';
 import TransactionHistory from '@/features/paymentHistory/pages/TransactionHistory';
 import ReuseComponents from '@/features/reuseComponents/pages/ReuseComponents';
+import TransactionDetail from '@/features/paymentHistory/pages/TransactionDetail';
 
 export default function AppRoutes() {
   return (
@@ -27,6 +28,7 @@ export default function AppRoutes() {
            <Route path="/reuse-components" element={<ReuseComponents />} />
            <Route path="/bank-cards" element={<BankCards />} />
            <Route path="/transactions" element={<TransactionHistory />} />
+            <Route path="/transaction/:transactionId" element={<TransactionDetail />} />
           {/* các route khác */}
         </Route>
       </Route>
