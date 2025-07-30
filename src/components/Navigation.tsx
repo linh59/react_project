@@ -9,13 +9,16 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '@/features/auth/authActions';
 import type { AppDispatch } from '@/app/store';
+import { useTranslation } from 'react-i18next';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 
 const Navigation = () => {
   const dispatch = useDispatch<AppDispatch>();
-
+  const { t } = useTranslation();
   const location = useLocation();
-  const isMobile = useIsMobile();
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const mainNavItems = [
@@ -37,174 +40,206 @@ const Navigation = () => {
 
   const isActive = (href: string) => {
     return location.pathname === href;
-  };
+  };// Check for screen sizes with proper breakpoints
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 640);
+      setIsTablet(width >= 640 && width < 1024);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   // Close mobile nav on route change
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  // Close mobile nav on outside click
+  // Handle outside click and prevent background scroll
   useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      const target = event.target as Element;
-      if (isMobile && isOpen && !target.closest('.nav-mobile') && !target.closest('.mobile-menu-trigger')) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
+    if (isOpen && isMobile) {
+      document.body.style.overflow = 'hidden';
+      const handleOutsideClick = (event: MouseEvent) => {
+        const target = event.target as Element;
+        if (!target.closest('.nav-mobile') && !target.closest('.mobile-menu-trigger')) {
+          setIsOpen(false);
+        }
+      };
       document.addEventListener('click', handleOutsideClick);
-      document.body.style.overflow = 'hidden'; // Prevent background scroll
+      return () => {
+        document.removeEventListener('click', handleOutsideClick);
+        document.body.style.overflow = '';
+      };
     } else {
       document.body.style.overflow = '';
     }
-
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-      document.body.style.overflow = '';
-    };
   }, [isMobile, isOpen]);
 
   const handleToggleNav = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsOpen(!isOpen);
   };
-  const handleLogout = () => {
+  const renderNavItem = (item: NavItem, isCompact = false) => {
+    const Icon = item.icon;
+    const active = isActive(item.href);
 
-    dispatch(logoutUser())
-  }
+    const navItem = (
+      <Link
+        key={item.name}
+        to={item.href}
+        className={`nav-item touch-target flex items-center p-3 text-sm font-medium rounded-2xl transition-all duration-300 group ${active
+            ? 'bg-gradient-to-r from-primary/90 to-primary/70 text-primary-foreground shadow-lg shadow-primary/25 nav-active scale-105'
+            : 'text-muted-foreground hover:text-foreground hover:bg-gradient-to-r hover:from-card-nested/80 hover:to-card-nested/60 hover:scale-105 hover:shadow-md clay-button'
+          } ${isCompact ? 'justify-center' : 'justify-start'}`}
+        onClick={() => isMobile && setIsOpen(false)}
+      >
+        <div className="flex items-center justify-center w-5 h-5 flex-shrink-0">
+          <Icon className="h-5 w-5" />
+        </div>
+        {!isCompact && (
+          <span className="nav-text truncate ml-3 font-medium">{t(item.name)}</span>
+        )}
+      </Link>
+    );
 
-  const navContent = (
-    <>
-      {/* Logo Section */}
-      <div className="p-6 border-b border-border/40">
-        <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/60 rounded-lg flex items-center justify-center shadow-md">
-            <BookOpen className="h-5 w-5 text-primary-foreground" />
+    if (isCompact) {
+      return (
+        <TooltipProvider key={item.name} delayDuration={300}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              {navItem}
+            </TooltipTrigger>
+            <TooltipContent side="right" className="clay-card bg-popover/95 backdrop-blur-md border-border/50 shadow-xl">
+              <p className="text-sm font-medium">{t(item.translationKey)}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    }
+
+    return navItem;
+  };
+
+  const renderUserProfile = (isCompact = false) => (
+    <div className={`user-profile border-t border-border/40 bg-gradient-to-b from-card-nested/40 to-card-nested/20 backdrop-blur-sm ${isCompact ? 'p-2' : 'p-4'}`}>
+      <div className={`flex items-center mb-3 ${isCompact ? 'justify-center' : 'space-x-3'}`}>
+        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center clay-card-nested flex-shrink-0 shadow-md">
+          <User className="h-5 w-5 text-primary" />
+        </div>
+        {!isCompact && (
+          <div className="nav-text flex-1 space-y-1">
+            <div className="text-sm font-semibold text-foreground">John Doe</div>
+            <Link
+              to="/profile"
+              className="text-xs text-muted-foreground hover:text-primary transition-colors duration-200"
+              onClick={() => isMobile && setIsOpen(false)}
+            >
+              {t('common.viewProfile')}
+            </Link>
           </div>
-          <span className="nav-text font-baloo font-bold text-lg text-foreground">EduPlatform</span>
-          <LanguageSwitcher />
+        )}
+      </div>
+      <div className={isCompact ? 'flex justify-center' : ''}>
+        <LogOut onClick={handleLogout} className="w-4 h-4 lg:w-5 lg:h-5 text-card-foreground hover:text-purple-700 drop-shadow-sm" />
+
+      </div>
+    </div>
+  );
+
+  const sidebarContent = (isCompact = false) => (
+    <div className="h-full flex flex-col">
+      {/* Logo Section */}
+      <div className={`logo-section border-b border-border/40 bg-gradient-to-b from-card/80 to-card-nested/60 backdrop-blur-sm ${isCompact ? 'p-3' : 'p-6'}`}>
+        <div className={`flex items-center ${isCompact ? 'justify-center' : 'justify-between'}`}>
+          <div className={`flex items-center ${isCompact ? 'justify-center' : 'space-x-3'}`}>
+            <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/60 rounded-xl flex items-center justify-center shadow-lg">
+              <BookOpen className="h-5 w-5 text-primary-foreground" />
+            </div>
+            {!isCompact && (
+              <span className="nav-text font-baloo font-bold text-lg text-foreground">EduPlatform</span>
+            )}
+          </div>
+          {!isCompact && !isMobile && (
+            <div className="hidden lg:block">
+              <LanguageSwitcher />
+            </div>
+          )}
         </div>
       </div>
 
       {/* Main Navigation */}
-      <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-        <div className="space-y-1">
-          {mainNavItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`touch-target flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group ${isActive(item.href)
-                  ? 'bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/25'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/50 clay-card-nested'
-                  }`}
-                onClick={() => isMobile && setIsOpen(false)}
-              >
-                <Icon className="h-5 w-5 mr-3 flex-shrink-0" />
-                <span className="nav-text truncate">{item.name}</span>
-              </Link>
-            );
-          })}
+      <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto sidebar-scroll">
+        <div className="space-y-2">
+          {mainNavItems.map((item) => renderNavItem(item, isCompact))}
         </div>
 
         <div className="py-4">
           <Separator className="bg-border/60" />
         </div>
 
-        <div className="space-y-1">
-          <div className="nav-text px-4 py-2 text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider">
-            Account
-          </div>
-          {userNavItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`touch-target flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 ${isActive(item.href)
-                  ? 'bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/25'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/50 clay-card-nested'
-                  }`}
-                onClick={() => isMobile && setIsOpen(false)}
-              >
-                <Icon className="h-5 w-5 mr-3 flex-shrink-0" />
-                <span className="nav-text truncate">{item.name}</span>
-              </Link>
-            );
-          })}
-          <button
-            className="p-2 lg:p-2.5 rounded-xl hover:bg-card/60 border-2 border-transparent hover:border-border/40 transition-all duration-200 transform hover:scale-105 backdrop-blur-sm touch-target flex-shrink-0"
-            aria-label="Sign out"
-          >
-            <LogOut onClick={handleLogout} className="w-4 h-4 lg:w-5 lg:h-5 text-card-foreground hover:text-purple-700 drop-shadow-sm" />
-          </button>
+        <div className="space-y-2">
+          {!isCompact && (
+            <div className="nav-text px-3 py-2 text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider">
+              {t('nav.account')}
+            </div>
+          )}
+          {userNavItems.map((item) => renderNavItem(item, isCompact))}
         </div>
       </nav>
 
       {/* User Profile Section */}
-      <div className="p-4 border-t border-border/40 bg-muted/30 clay-card-nested">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center clay-card-nested">
-            <User className="h-5 w-5 text-primary" />
-          </div>
-          <div className="nav-text flex-1 space-y-1">
-            <div className="text-sm font-medium text-foreground">John Doe</div>
-            <Link
-              to="/profile"
-              className="text-xs text-muted-foreground hover:text-primary transition-colors"
-              onClick={() => isMobile && setIsOpen(false)}
-            >
-              View Profile
-            </Link>
-          </div>
-        </div>
-      </div>
-    </>
+      {renderUserProfile(isCompact)}
+    </div>
   );
+
+  const handleLogout = () => {
+
+    dispatch(logoutUser())
+  }
 
   if (isMobile) {
     return (
       <>
         {/* Mobile Header with Hamburger */}
-        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 h-16 bg-background/95 backdrop-blur-sm border-b border-border/40 clay-card flex items-center justify-between px-4">
+        <div className="fixed top-0 left-0 right-0 z-50 h-16 bg-card/95 backdrop-blur-xl border-b border-border/40 clay-card-enhanced flex items-center justify-between px-4 shadow-xl">
           <Button
             variant="ghost"
             size="sm"
             onClick={handleToggleNav}
-            className="touch-target mobile-menu-trigger p-2"
+            className="touch-target mobile-menu-trigger p-2 hover:bg-muted/60 clay-button"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
             <div className="w-6 h-6 bg-gradient-to-br from-primary to-primary/60 rounded-md flex items-center justify-center">
               <BookOpen className="h-4 w-4 text-primary-foreground" />
             </div>
             <span className="font-baloo font-bold text-base text-foreground">EduPlatform</span>
           </div>
 
-          <div className="w-10" /> {/* Spacer for centering */}
+          <LanguageSwitcher />
         </div>
 
         {/* Overlay */}
-        {isOpen && <div className="nav-overlay" />}
+        {isOpen && <div className="nav-overlay fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-all duration-300" />}
 
         {/* Mobile Navigation */}
-        <div className={`nav-mobile clay-card ${isOpen ? 'open' : ''} flex flex-col bg-background/98 backdrop-blur-md`}>
-          {navContent}
+        <div className={`nav-mobile fixed inset-y-0 left-0 z-50 w-64 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} clay-card flex flex-col bg-background/98 backdrop-blur-md shadow-xl`}>
+        {sidebarContent(false)}
         </div>
       </>
     );
   }
 
-  // Desktop/Tablet Navigation
+  // Desktop/Tablet Navigation - Fixed Position
   return (
-    <div className={`h-screen bg-background/95 backdrop-blur-sm border-r border-border/40 clay-card flex flex-col sticky top-0 transition-all duration-300 ${'w-64 lg:w-64 md:w-16 nav-tablet'
-      }`}>
-      {navContent}
+    <div className={`sidebar-container fixed top-0 left-0 h-screen z-30 transition-all duration-300 ease-in-out ${isTablet ? 'w-20' : 'w-60'
+      } bg-card/95 backdrop-blur-xl border-r border-border/40 clay-card-enhanced shadow-2xl overflow-hidden`}>
+      {sidebarContent(isTablet)}
     </div>
   );
 };
