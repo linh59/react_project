@@ -1,5 +1,5 @@
 {
-    "common":{
+    "common": {
         "back": "Back"
     },
     "home": {
@@ -29,9 +29,11 @@
         "searchPlaceholder": "Search",
         "filterStatus": "Filter status",
         "allStatuses": "All statuses",
-        "completed": "Completed",
-        "pending": "Pending",
-        "failed": "Failed",
+        "COMPLETE": "Completed",
+        "PENDING": "Pending",
+        "FAILED": "Failed",
+        "CANCEL": "Cancel",
+        "WAITING_FOR_PAYMENT": "Waiting for payment",
         "showing": "Showing",
         "perPage": "/page",
         "results": "Results",
@@ -48,7 +50,10 @@
         "tax": "Tax",
         "total": "Total",
         "subtotal": "Sub total",
-        "billingInfo": "Billing Information"
+        "billingInfo": "Billing Information",
+        "ONE_TIME": "One time",
+        "CREDIT_CARD": "Credit card",
+        "CASH": "Cash"
     },
     "components": {
         "title": "UI Components",

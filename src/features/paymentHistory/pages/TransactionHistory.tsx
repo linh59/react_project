@@ -55,33 +55,36 @@ const TransactionHistory = () => {
           {t('transactions.description')}
         </p>
       </div>
-      <div className="flex items-center justify-end mb-4 gap-2 w-full sm:w-auto">
-        <Button
-          variant={viewMode === 'table' ? 'default' : 'outline'}
-          size="sm"
-          onClick={() => setViewMode('table')}
-          className="flex-1 sm:flex-none"
-        >
-          <Grid className="h-4 w-4 " />
 
-        </Button>
-        <Button
-          variant={viewMode === 'list' ? 'default' : 'outline'}
-          size="sm"
-          onClick={() => setViewMode('list')}
-          className="flex-1 sm:flex-none"
-        >
-          <List className="h-4 w-4 " />
-
-        </Button>
-      </div>
       {/* Filters and Controls */}
       <div className="clay-card-enhanced mb-6">
         <div className="p-4 md:p-6">
           <SearchFilterComponent
             onSearchChange={setSearch}
             onFilterByStatus={setStatus}
-          />
+          >
+            <div className="flex items-center justify-end gap-2 w-full sm:w-auto">
+              <Button
+                variant={viewMode === 'table' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('table')}
+                className="flex-1 sm:flex-none"
+              >
+                <Grid className="h-4 w-4 " />
+
+              </Button>
+              <Button
+                variant={viewMode === 'list' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setViewMode('list')}
+                className="flex-1 sm:flex-none"
+              >
+                <List className="h-4 w-4 " />
+
+              </Button>
+            </div>
+          </SearchFilterComponent>
+
         </div>
       </div>
 

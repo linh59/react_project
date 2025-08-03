@@ -33,7 +33,7 @@ const HistoriesTable = (props: PaymentHistoryProps) => {
                 <TableRow key={transaction.id} className="hover:bg-muted/30 transition-colors">
                   <TableCell className="font-medium">
                     <div>
-                      <div className="font-semibold">{transaction.selected_payment_type}</div>
+                      <div className="font-semibold">{t(`transactions.${transaction.selected_payment_type}`)}</div>
                       <div className="text-sm text-muted-foreground md:hidden">
                         {new Date(transaction.create_date).toLocaleDateString()}
                       </div>
@@ -49,7 +49,8 @@ const HistoriesTable = (props: PaymentHistoryProps) => {
                     </Badge>
                   </TableCell>
                   <TableCell className="hidden lg:table-cell text-muted-foreground">
-                    {transaction.pay_method_name}
+                    {transaction.pay_method_name ? t(`transactions.${transaction.pay_method_name}`) : ''}
+
                   </TableCell>
                   <TableCell>
                     <Button
