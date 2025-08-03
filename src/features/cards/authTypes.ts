@@ -11,6 +11,12 @@ export interface CardModel {
   card_type: string;
 
 }
+export interface CardRequest {
+  holder_name: string;
+  card_no: string;
+  expire: string;
+  security_code: string;
+}
 
 
 export interface IQueryCardsParams {

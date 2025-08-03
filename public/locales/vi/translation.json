@@ -1,4 +1,10 @@
 {
+    "common": {
+        "back": "Quay lại",
+        "cancel": "Huỷ",
+        "loading": "Loading",
+        "ok":"Xác nhận"
+    },
     "home": {
         "streak": "Ngày học liên tiếp"
     },
@@ -7,12 +13,15 @@
         "description": "Quản lý phương thức thanh toán đã lưu",
         "addCard": "Thêm thẻ",
         "addNewCard": "Thêm mới thẻ",
-        "cardName": "Card name",
-        "cardNumber": "Card number",
-        "expires": "Expires",
+        "cardName": "Tên thẻ",
+        "cardNumber": "Số thẻ",
+        "expiry": "Ngày hết hạn",
         "cvv": "CVV",
-        "noCards": "No card",
-        "noCardsDescription": "Description"
+        "noCards": "Chưa có thẻ",
+        "noCardsDescription": "Mô tả",
+        "confirmDeleteTitle": "Xác nhận xóa",
+        "confirmDeleteMessage": "Bạn có chắc chắn muốn xóa thẻ này không? Hành động này không thể hoàn tác.",
+        "addSuccess": "Thêm thẻ thành công!"
     },
     "transactions": {
         "title": "Transaction History",
@@ -38,7 +47,10 @@
         "viewDetails": "View detail",
         "ONE_TIME": "One time",
         "CREDIT_CARD": "Credit card",
-        "CASH": "Cash"
+        "CASH": "Cash",
+        "confirmDeleteTitle": "Xác nhận xóa",
+        "confirmDeleteMessage": "Bạn có chắc chắn muốn xóa thẻ này không? Hành động này không thể hoàn tác.",
+        "addSuccess": "Thêm thẻ thành công!"
     },
     "components": {
         "title": "UI Components",

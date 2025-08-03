@@ -2,17 +2,15 @@ import { AxiosError } from "axios";
 
 export interface APIErrorInfo {
   message: string;
-  code?: string;
+  code?: string | number;
   status?: number;
-  raw?: any; // optional: toàn bộ response lỗi
+  raw?: unknown; 
 }
 
-/**
- * Xử lý lỗi từ Axios hoặc Unknown Error
- */
+
 export const handleAPIError = (error: unknown): APIErrorInfo => {
   if (error && typeof error === "object" && "isAxiosError" in error) {
-    const axiosError = error as AxiosError<any>;
+    const axiosError = error as AxiosError<{ message?: string; error?: string; code?: string | number }>;
     const res = axiosError.response;
 
     return {
@@ -28,5 +26,6 @@ export const handleAPIError = (error: unknown): APIErrorInfo => {
 
   return {
     message: "Lỗi không xác định",
+    raw: error,
   };
 };

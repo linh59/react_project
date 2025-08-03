@@ -68,8 +68,6 @@ export default tseslint.config([
 ])
 ```
 
-Xong roi a
-anh quen dung dong lenh
 echo "# react_project" >> README.md
 # khoi tao git cho thu muc
 # Khởi tạo Git

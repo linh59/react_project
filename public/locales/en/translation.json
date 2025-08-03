@@ -1,6 +1,9 @@
 {
     "common": {
-        "back": "Back"
+        "back": "Back",
+        "cancel": "Cancel",
+        "loading": "Loading",
+        "ok":"Confirm"
     },
     "home": {
         "streak": "Day streak"
@@ -12,10 +15,15 @@
         "addNewCard": "Add new card",
         "cardName": "Card name",
         "cardNumber": "Card number",
-        "expires": "Expires",
+        "expiry": "Expires",
         "cvv": "CVV",
         "noCards": "No card",
-        "noCardsDescription": "Description"
+        "noCardsDescription": "Description",
+        "confirmDeleteTitle": "Confirm Delete",
+        "confirmDeleteMessage": "Are you sure you want to delete this card? This action cannot be undone?",
+        "addSuccess": "Card added successfully!",
+        "deleteFailed": "",
+        "deleteSuccess": ""
     },
     "transactions": {
         "title": "Transaction History",

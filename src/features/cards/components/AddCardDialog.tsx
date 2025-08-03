@@ -25,7 +25,7 @@ const AddCardDialog = () => {
                     <DialogTitle>{t('bankCards.addNewCard')}</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4">
-                    <AddCardForm />
+                    <AddCardForm onSuccess={() => setIsAddCardOpen(false)} />
                 </div>
             </DialogContent>
         </Dialog>

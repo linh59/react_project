@@ -14,12 +14,11 @@ const Cards = (props: CardsProps) => {
   const { t } = useTranslation();
   if (props.isLoading) return <div className='text-center mx-auto'><Loader className="animate-spin" /></div>;
   if (props.errorMessage) return <p className="text-red-500">{props.errorMessage}</p>;
-
   return (
     <div>
       <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
         {props.cards.map((card) => (
-          <CardItem card={card} />
+          <CardItem card={card} key={card.id} />
         ))}
       </div>
 

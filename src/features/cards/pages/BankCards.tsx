@@ -1,19 +1,21 @@
 
 import { useEffect, } from 'react';
 import { useTranslation } from 'react-i18next';
-import useCardList from '../hooks/useCardList';
-import Cards from '../components/cards';
 import AddCardDialog from '../components/AddCardDialog';
+import { fetchCards } from '@/features/cards/redux/cardThunks';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '@/app/store';
+import Cards from '../components/Cards';
 
 
 const BankCards = () => {
   const { t } = useTranslation();
-  const { cards, isLoading, errorMessage, fetchCards } = useCardList();
-
+  const dispatch = useDispatch<AppDispatch>();
+  const { list: cards, fetchLoading, fetchError} = useSelector((state: RootState) => state.cards)
 
   useEffect(() => {
-    fetchCards();
-  }, [])
+    dispatch(fetchCards())
+  }, [dispatch])
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-6xl">
@@ -34,7 +36,7 @@ const BankCards = () => {
 
         {/* Cards List */}
        
-        <Cards cards={cards} isLoading={isLoading} errorMessage={errorMessage}/>
+        <Cards cards={cards} isLoading={fetchLoading} errorMessage={fetchError}/>
       
       </div>
     </div>

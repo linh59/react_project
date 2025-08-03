@@ -1,11 +1,15 @@
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
 import { Calendar, CreditCard, Hash, Trash2 } from "lucide-react"
 import { useTranslation } from "react-i18next"
 import type { CardModel } from "../authTypes"
+import { useDispatch } from "react-redux"
+import type { AppDispatch } from "@/app/store"
+import { deleteCardThunk } from "../redux/cardThunks"
 import { toast } from "sonner"
+import ConfirmDialog from "@/components/ConfirmDialog"
+import { useState } from "react"
 
 interface CardProps {
     card: CardModel;
@@ -13,6 +17,9 @@ interface CardProps {
 
 const CardItem = ({ card }: CardProps) => {
     const { t } = useTranslation();
+    const dispatch = useDispatch<AppDispatch>();
+    const [openDialog, setOpenDialog] = useState(false);
+    const [loading, setLoading] = useState(false);
     const getCardTypeIcon = (type: string) => {
         switch (type) {
             case 'VISA':
@@ -25,9 +32,19 @@ const CardItem = ({ card }: CardProps) => {
                 return <CreditCard className="h-5 w-5 text-muted-foreground" />;
         }
     };
-    const handleDeleteCard = (id: string) => {
-        // setCards(cards.filter(card => card.id !== id));
-        toast.success('Card removed successfully');
+    const handleDeleteCard = async () => {
+        try {
+            setLoading(true);
+            await dispatch(deleteCardThunk(card.id)).unwrap();
+            toast.success(t('bankCards.deleteSuccess'));
+            setOpenDialog(false);
+        } catch {
+            toast.error(t('bankCards.deleteFailed') || 'Failed to delete card');
+        } finally {
+            setLoading(false);
+        }
+
+
     };
 
     return (
@@ -50,14 +67,25 @@ const CardItem = ({ card }: CardProps) => {
                             </div>
                         </div>
                     </div>
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDeleteCard(card.id)}
-                        className="text-destructive hover:text-destructive/90 hover:bg-destructive/10 transition-colors p-2"
-                    >
-                        <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <ConfirmDialog
+                        open={openDialog}
+                        onOpenChange={setOpenDialog}
+                        title={t('bankCards.confirmDeleteTitle') || 'Confirm Delete'}
+                        description={t('bankCards.confirmDeleteMessage') || 'Are you sure you want to delete this card?'}
+                        trigger={
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-destructive hover:text-destructive/90 hover:bg-destructive/10 transition-colors p-2"
+                            >
+                                <Trash2 className="h-4 w-4" />
+                            </Button>
+                        }
+                        onConfirm={handleDeleteCard}
+                        confirmText={t('common.ok')}
+                        cancelText={t('common.cancel')}
+                        loading={loading}
+                    />
                 </div>
 
                 <div className="space-y-3">
@@ -67,7 +95,7 @@ const CardItem = ({ card }: CardProps) => {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Calendar className="h-4 w-4" />
-                        <span>{t('bankCards.expires')} {card.expire}</span>
+                        <span>{t('bankCards.expiry')} {card.expire}</span>
                     </div>
                 </div>
             </div>
